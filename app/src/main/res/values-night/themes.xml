@@ -1,0 +1,5 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.Love_Calculator_hw_2_5" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/dark</item>
+    </style>
+</resources>

@@ -1,56 +1,46 @@
 package com.example.love_calculator_hw_2_5
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import com.example.love_calculator_hw_2_5.databinding.ActivityMainBinding
-import com.example.love_calculator_hw_2_5.model.LoveModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity(), LoveView {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var presenter = Presenter()
-    private var firstName = String()
-    private var secondName = String()
+    private val viewModel: LoveViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter.attachView(this)
         initClickers()
     }
 
     private fun initClickers() {
         with(binding) {
             btnCheck.setOnClickListener {
-                firstName = etFirstName.text.toString()
-                secondName = etSecondName.text.toString()
-                presenter.getData(firstName, secondName)
+                getData()
+            }
+            btnHistory.setOnClickListener {
+                startActivity(Intent(this@MainActivity, SecondActivity::class.java))
+                tvResult.isGone = true
             }
         }
     }
 
-    override fun showResult(model: LoveModel) {
-        if (firstName.isNotEmpty() && secondName.isNotEmpty()) {
-            val resultText = "Percentage: " + model.percentage + "\nResult: " + model.result
-            val secondActivity = Intent(this, SecondActivity::class.java)
-            secondActivity.putExtra("resultText", resultText)
-            startActivity(secondActivity)
-        } else {
-            if (firstName.isEmpty()) {
-                binding.etFirstName.error = "Enter the first name"
+    private fun ActivityMainBinding.getData() {
+        viewModel.getLoveLiveData(etFirstName.text.toString(), etSecondName.text.toString())
+            .observe(this@MainActivity) {
+                App.appDatabase.getDao().insert(it)
+                tvResult.text = it.toString()
+                tvResult.isVisible = true
             }
-            if (secondName.isEmpty()) {
-                binding.etSecondName.error = "Enter the second name"
-            }
-        }
     }
-
-    override fun showError(error: String) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-    }
-
-
 }

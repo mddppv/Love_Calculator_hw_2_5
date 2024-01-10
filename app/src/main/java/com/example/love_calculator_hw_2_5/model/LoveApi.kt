@@ -15,5 +15,4 @@ interface LoveApi {
         @Header("X-RapidAPI-Host") host: String = "love-calculator.p.rapidapi.com"
     ): Call<LoveModel>
 
-
 }

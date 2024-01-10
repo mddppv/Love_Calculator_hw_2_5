@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark"
-    android:gravity="center"
-    android:orientation="vertical"
     android:padding="16dp"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_default"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_result"
+            android:id="@+id/tvHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_default"
             android:fontFamily="@font/karla_font"
             android:gravity="center"
-            android:text="@string/your_result"
+            android:minHeight="64dp"
+            android:padding="16dp"
+            android:text="@string/love_history"
             android:textColor="@color/white"
             android:textSize="32sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_love_result"
+            android:id="@+id/tvResultHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_default"
             android:fontFamily="@font/karla_font"
             android:gravity="center"
+            android:minHeight="56dp"
+            android:padding="16dp"
             android:textColor="@color/white"
-            android:textSize="24sp"
-            tools:text="text\ntext" />
+            android:textSize="18sp"
+            tools:text="Text" />
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>
